@@ -43,7 +43,7 @@ def _scp(user, host, private_key_path, path, files, toRemote):
         source = "%s/%s" % (path, source_file) if toRemote else "%s@%s:%s" % (user, host, source_file)
         destination = "%s@%s:%s" % (user, host, destination_file) if toRemote else "%s/%s" % (path, destination_file)
 
-        proc = subprocess.run(["scp", "-i", private_key_path,"-r", "%s/%s" % (path, source), "%s@%s:%s" % (user, host, destination)]
+        proc = subprocess.run(["scp", "-i", private_key_path,"-r", source, destination]
                             , check=True
                             , stdout=subprocess.PIPE)
         eprint(proc.stdout.decode("utf-8"))
