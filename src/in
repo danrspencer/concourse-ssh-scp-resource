@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
+import json
 import sys
 
 sys.tracebacklimit = 0
 
-print("[]")
+print(json.dumps({"version":{},"metadata":[]}))
 exit(0)
