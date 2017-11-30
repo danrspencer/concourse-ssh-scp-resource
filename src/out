@@ -7,6 +7,8 @@ import sys
 from datetime import datetime
 from shared import *
 
+sys.tracebacklimit = 0
+
 config_schema = {
     "source": {
         "user": "",
@@ -38,3 +40,4 @@ main(path, config)
 
 output = { "version": { "ref": "out - %s" % datetime.now().isoformat() } }
 print(json.dumps(output))
+exit(0)
