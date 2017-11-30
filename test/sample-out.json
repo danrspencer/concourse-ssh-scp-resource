@@ -1,0 +1,13 @@
+{
+    "source": {
+        "host": "ec2-concourse3.anaplan-np.net",
+        "user": "ec2-user",
+        "private_key": "..."
+    },
+    "params": {
+        "commands": [
+            "ls",
+            "echo \"hello world\""
+        ]
+    }
+}

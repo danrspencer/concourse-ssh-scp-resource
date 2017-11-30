@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+
+import json
+import subprocess
+import sys
+
+from datetime import datetime
+from shared import *
+
+config_schema = {
+    "source": {
+        "user": "",
+        "host": "",
+        "private_key": ""
+    },
+    "params": {}
+}
+
+def main(path, config):
+    validate_schema(config, config_schema)
+    user = config["source"]["user"]
+    host = config["source"]["host"]
+    private_key = config["source"]["private_key"]
+    params = config["params"]
+
+    private_key_path = write_private_key(path, private_key)
+
+    if "files" in params:
+        scpTo(user, host, private_key_path, path, params["files"])
+
+    if "commands" in params:
+        sshRun(user, host, private_key_path, params["commands"])
+
+path = sys.argv[1]
+config = json.loads(sys.stdin.read())
+
+main(path, config)
+
+output = { "version": { "ref": "out - %s" % datetime.now().isoformat() } }
+print(json.dumps(output))
