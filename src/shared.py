@@ -43,7 +43,7 @@ def _scp(user, host, private_key_path, path, files, toRemote):
         source = "%s/%s" % (path, source_file) if toRemote else "%s@%s:%s" % (user, host, source_file)
         destination = "%s@%s:%s" % (user, host, destination_file) if toRemote else "%s/%s" % (path, destination_file)
 
-        proc = subprocess.run(["scp", "-oUserKnownHostsFile=/dev/null", "-i", private_key_path,"-r", source, destination]
+        proc = subprocess.run(["scp", "-oStrictHostKeyChecking=no", "-i", private_key_path,"-r", source, destination]
                             , check=True
                             , stdout=subprocess.PIPE)
         eprint(proc.stdout.decode("utf-8"))
@@ -52,7 +52,7 @@ def sshRun(user, host, private_key_path, commands):
     if not isinstance(commands, list):
         raise ValueError("Expected 'commands' to be a list, found %s" % type(commands).__name__)
 
-    proc = subprocess.run(["ssh", "-oUserKnownHostsFile=/dev/null", "-i", private_key_path, "%s@%s" % (user, host), "%s" % " && ".join(commands)]
+    proc = subprocess.run(["ssh", "-oStrictHostKeyChecking=no", "-i", private_key_path, "%s@%s" % (user, host), "%s" % " && ".join(commands)]
                         , check=True
                         , stdout=subprocess.PIPE)
     eprint(proc.stdout.decode("utf-8"))
